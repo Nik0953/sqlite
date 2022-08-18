@@ -15,45 +15,36 @@
 
   <!--верхнее меню навигации-->
   <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="/">Главная</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/req/">Запрос</a>
+      <a class="nav-link" href="/">выбор</a>
     </li>
     <li class="nav-item">
       <a class="nav-link active" href="/results/">Результаты</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/contacts/">Контакты</a>
-    </li>
   </ul>
 
   <p></p>
-  <h3>РЕЗУЛЬТАТ <br>запроса к базе вакансий<br>
+  <h3>РЕЗУЛЬТАТ ВЫБОРКИ <br>из запроса к базе вакансий<br>
         <a href="https://hh.ru">head hunter</a></h3>
 
   <hr align="center" color="#fff" size="3" />
 
-  {% if vac_lst %}
-      <h5>Ключевые слова запроса: {{req.key_words}}</h5>
-      <h5>Регион поиска: {{vac_region}}</h5>
-      <h5>Вакансия актуальна: {{req.n_days}} дней</h5>
-      <h5>Всего найдено вакансий: {{vac_number}}</h5>
+  {% if rf %}
+      <h5>Выборка из найденных вакансий</h5>
+      <h4>Регион поиска: {{rf.were_to_find}}</h4>
+      <h4>Минимальная заработная плата: {{rf.sal_min}} рублей</h4>
+      <h4>Ключевое слово запроса: {{rf.what_skills}}</h4>
   {% endif %}
 
-  <hr align="center" color="#fff" size="3" />
+  <hr class="border border-primary border-3 opacity-75">
 
-  {% if vac_lst %}
-      {% for vac in vac_lst %}
+
+  {% if vl %}
+      {% for vac in vl %}
       <h3> {{vac.name}} </h3>
-      {% if vac.salary %}
-          <h4> заработная плата: </h4>
-          {% if vac.salary.from %}
-              <h4> от: {{vac.salary.from}} до: {{vac.salary.to}} {{vac.salary.currency}}</h4>
-          {% endif %}
-      {% endif %}
-           <a href="{{vac.alternate_url}}" target="_blank"> вакансия {{vac.id}} </a>
+       <p> регион: {{vac.reg}}, населенный пункт: {{vac.town}} <br>
+       заработная плата: от {{vac.s_from}} до: {{vac.s_to}} рублей<br>
+       ключевые требования:{{vac.skill}} <br>
+       <a href="{{vac.alternate_url}}" target="_blank"> вакансия {{vac.id}} </a>
       <hr align="center" color="#fff" size="3" />
       {% endfor %}
   {% else %}
